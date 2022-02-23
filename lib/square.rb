@@ -16,8 +16,15 @@ class Square
     @occupant = piece.name
   end
 
+  def neighbor(direction, name = nil)
+    @neighbors.find do |neighbor|
+      neighbor.direction == direction ||
+      neighbor.name == name
+    end
+  end
+
   def to_s
-    name
+    @name
   end
 
   def render
