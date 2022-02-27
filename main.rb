@@ -12,6 +12,16 @@ class ChessBoard
     rank_name = rank.to_s
     "#{file_name}#{rank_name}".to_sym
   end
+
+  def self.squares
+    squares = {}
+    coordinates_list = self.coordinates_list
+    coordinates_list.map do |coordinates|
+      square_name = ChessBoard.square_name(coordinates)
+      squares[square_name] = coordinates
+    end
+    squares
+  end
 end
   
 def vertices
@@ -40,7 +50,8 @@ def edges(vertex)
   ]
 end
 
-def adjacent_vertices(vertex, vertices = vertices())
+def adjacent_vertices(vertex)
+  vertices = ChessBoard.squares
   names_of_adjacent_vertices = vertices.select do |k, v|
     edges(vertex).include?(v)
   end.keys
