@@ -42,6 +42,14 @@ class Knight
       [file + 2, rank + 1,],
       [file + 2, rank - 1,]]
   end
+
+  def self.all_valid_moves
+    adjacency_list = {}
+    ChessBoard.squares.map do |square, coords|
+      adjacency_list[square] = Knight.valid_moves_from(coords)
+    end
+    adjacency_list
+  end
 end
 
 def adjacency_list
@@ -53,7 +61,7 @@ end
 
 def update_queue_with(current_path)
   queue = []
-  adjacent_vertices = adjacency_list[(current_path[:to])]
+  adjacent_vertices = Knight.all_valid_moves[(current_path[:to])]
   
   if current_path[:from]
     adjacent_vertices.delete_if do |adjacent_vertex|
