@@ -15,7 +15,6 @@ class ChessBoard
 
   def self.squares
     squares = {}
-    coordinates_list = self.coordinates_list
     coordinates_list.map do |coordinates|
       square_name = ChessBoard.square_name(coordinates)
       squares[square_name] = coordinates
