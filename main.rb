@@ -79,9 +79,11 @@ class PathFinder
   end
 end
 
-def path_completed?(current_path, completed_paths)
-  completed_paths.any? do |completed_path|
-    completed_path[:to] == current_path[:to]
+class Path
+  def self.completed?(current_path, completed_paths)
+    completed_paths.any? do |completed_path|
+      completed_path[:to] == current_path[:to]
+    end
   end
 end
 
@@ -91,7 +93,7 @@ def paths_to(destination, source)
   completed_paths = []
    until PathFinder.finished?(destination, queue, completed_paths)
     current_path = queue.shift
-    unless path_completed?(current_path, completed_paths)
+    unless Path.completed?(current_path, completed_paths)
       queue += PathFinder.update_queue_with(current_path)
       completed_paths << current_path
     end
