@@ -1,20 +1,10 @@
 # frozen_string_literal: true
 
 require './lib/path_finder.rb'
-
-def display_path(destination, source)
-  shortest_path = PathFinder.shortest_path(destination, source)
-  vertices = shortest_path.shift.values
-
-  until shortest_path.empty?
-    vertices << shortest_path.shift.values.last
-  end
-
-  vertices.each(&:to_s).join(' -> ')
-end
+require './lib/display.rb'
 
 def display_result(destination, source)
-  path = display_path(destination, source)
+  path = Display.path(destination, source)
   cost = PathFinder.path_cost(destination, source)
   puts "You can get from #{source} to #{destination} in #{cost} moves!"
   puts path
