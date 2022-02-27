@@ -14,10 +14,6 @@ class ChessBoard
   end
 end
   
-def vertex_name(coordinates)
-  ChessBoard.square_name(coordinates)
-end
-
 def vertices
   vertices = {}
   coordinates_list = ChessBoard.coordinates_list
