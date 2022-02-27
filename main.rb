@@ -25,19 +25,19 @@ class ChessBoard
 end
 
 class Knight
-  def self.edges(vertex)
-    column = vertex[0]
-    row = vertex[1]
+  def self.valid_moves_from(square)
+    file = square[0]
+    rank = square[1]
   
     [
-      [column - 2, row + 1,],
-      [column - 2, row - 1,],
-      [column - 1, row + 2,],
-      [column - 1, row - 2,],
-      [column + 1, row + 2,],
-      [column + 1, row - 2,],
-      [column + 2, row + 1,],
-      [column + 2, row - 1,],
+      [file - 2, rank + 1,],
+      [file - 2, rank - 1,],
+      [file - 1, rank + 2,],
+      [file - 1, rank - 2,],
+      [file + 1, rank + 2,],
+      [file + 1, rank - 2,],
+      [file + 2, rank + 1,],
+      [file + 2, rank - 1,],
     ]
   end
 end
@@ -45,7 +45,7 @@ end
 def adjacent_vertices(vertex)
   vertices = ChessBoard.squares
   names_of_adjacent_vertices = vertices.select do |k, v|
-    Knight.edges(vertex).include?(v)
+    Knight.valid_moves_from(vertex).include?(v)
   end.keys
 end
 
