@@ -70,22 +70,6 @@ class PathFinder
   end
 end
 
-def update_queue_with(current_path)
-  queue = []
-  adjacent_vertices = Knight.all_valid_moves[(current_path[:to])]
-  
-  if current_path[:from]
-    adjacent_vertices.delete_if do |adjacent_vertex|
-      adjacent_vertex == current_path[:from]
-    end
-  end
-  adjacent_vertices.each do |adjacent_vertex|
-    queue.push({from: current_path[:to],
-                to: adjacent_vertex})
-  end
-  queue
-end
-
 def finished?(destination, queue, completed_paths)
   return false if completed_paths.empty?
   return true if queue.empty?
