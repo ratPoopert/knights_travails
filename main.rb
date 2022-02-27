@@ -91,6 +91,23 @@ class PathFinder
     end
     completed_paths
   end
+
+  def self.shortest_path(destination, source)
+    paths = PathFinder.paths_to(destination, source)
+    shortest_path = []
+    current_edge = paths.pop
+    
+    until paths.empty?
+      target = current_edge[:from]
+      next_edge = paths.pop
+      next unless next_edge[:to] == target
+  
+      shortest_path << current_edge
+      current_edge = next_edge
+    end
+    shortest_path << current_edge
+    shortest_path.reverse
+  end
 end
 
 class Path
@@ -99,20 +116,6 @@ class Path
       completed_path[:to] == current_path[:to]
     end
   end
-end
-
-def paths_to(destination, source)
-  current_path = {from: nil, to: source}
-  queue = PathFinder.update_queue_with(current_path)
-  completed_paths = []
-   until PathFinder.finished?(destination, queue, completed_paths)
-    current_path = queue.shift
-    unless Path.completed?(current_path, completed_paths)
-      queue += PathFinder.update_queue_with(current_path)
-      completed_paths << current_path
-    end
-  end
-  completed_paths
 end
 
 def shortest_path(destination, source)
@@ -133,11 +136,11 @@ def shortest_path(destination, source)
 end
 
 def path_cost(destination, source)
-  shortest_path(destination, source).length.to_s
+  PathFinder.shortest_path(destination, source).length.to_s
 end
 
 def display_path(destination, source)
-  shortest_path = shortest_path(destination, source)
+  shortest_path = PathFinder.shortest_path(destination, source)
   vertices = shortest_path.shift.values
 
   until shortest_path.empty?
