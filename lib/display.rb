@@ -13,4 +13,10 @@ class Display
   
     vertices.each(&:to_s).join(' -> ')
   end
+
+  def self.result(destination, source)
+    cost = PathFinder.path_cost(destination, source)
+    puts "You can get from #{source} to #{destination} in #{cost} moves!"
+    puts Display.path(destination, source)
+  end
 end
