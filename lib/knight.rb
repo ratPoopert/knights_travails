@@ -2,25 +2,24 @@
 
 require './lib/chess_board.rb'
 
+# Represents a knight chess piece.
 class Knight
-  def self.valid_moves_from(square)
-    this_file = square.file
-    this_rank = square.rank
-    ChessBoard.squares.select do |square|
-      coords = {file: square.file, rank: square.rank}
-      move_list(this_file, this_rank).include?(coords)
+  def self.valid_moves_from(this_square)
+    ChessBoard.squares.select do |that_square|
+      coords = { file: that_square.file, rank: that_square.rank }
+      move_list(this_square.file, this_square.rank).include?(coords)
     end.map(&:name)
   end
 
   def self.move_list(file, rank)
-     [{file: file - 2, rank: rank + 1,},
-      {file: file - 2, rank: rank - 1,},
-      {file: file - 1, rank: rank + 2,},
-      {file: file - 1, rank: rank - 2,},
-      {file: file + 1, rank: rank + 2,},
-      {file: file + 1, rank: rank - 2,},
-      {file: file + 2, rank: rank + 1,},
-      {file: file + 2, rank: rank - 1,}]
+    [{ file: file - 2, rank: rank + 1  },
+     { file: file - 2, rank: rank - 1  },
+     { file: file - 1, rank: rank + 2  },
+     { file: file - 1, rank: rank - 2  },
+     { file: file + 1, rank: rank + 2  },
+     { file: file + 1, rank: rank - 2  },
+     { file: file + 2, rank: rank + 1  },
+     { file: file + 2, rank: rank - 1  }]
   end
 
   def self.all_valid_moves

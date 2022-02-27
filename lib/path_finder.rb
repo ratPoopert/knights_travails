@@ -5,18 +5,13 @@ require './lib/path.rb'
 
 class PathFinder
   def self.update_queue_with(current_path)
-    current_path
     queue = []
-    p moves = Knight.all_valid_moves[(current_path[:to])]
+    moves = Knight.all_valid_moves[(current_path.destination)]
     
-    if current_path[:from]
-      moves.delete_if do |move|
-        move == current_path[:from]
-      end
-    end
+    moves.delete_if { |move| move == current_path.source }
+
     moves.each do |move|
-      queue.push({from: current_path[:to],
-                  to: move})
+      queue << Path.new(current_path.destination, move)
     end
     queue
   end
@@ -26,12 +21,12 @@ class PathFinder
     return true if queue.empty?
     
     completed_paths.any? do |completed_path|
-      completed_path[:to] == destination
+      completed_path.destination == destination
     end
   end
 
   def self.paths_to(destination, source)
-    current_path = {from: nil, to: source}
+    current_path = Path.new(nil, source)
     queue = PathFinder.update_queue_with(current_path)
     completed_paths = []
      until PathFinder.finished?(destination, queue, completed_paths)
@@ -50,9 +45,9 @@ class PathFinder
     current_edge = paths.pop
     
     until paths.empty?
-      target = current_edge[:from]
+      target = current_edge.source
       next_edge = paths.pop
-      next unless next_edge[:to] == target
+      next unless next_edge.destination == target
   
       shortest_path << current_edge
       current_edge = next_edge
