@@ -23,16 +23,6 @@ class ChessBoard
     squares
   end
 end
-  
-def vertices
-  vertices = {}
-  coordinates_list = ChessBoard.coordinates_list
-  coordinates_list.map do |coordinates|
-    vertex_name = ChessBoard.square_name(coordinates)
-    vertices[vertex_name] = coordinates
-  end
-  vertices
-end
 
 def edges(vertex)
   column = vertex[0]
@@ -57,7 +47,8 @@ def adjacent_vertices(vertex)
   end.keys
 end
 
-def adjacency_list(vertices = vertices())
+def adjacency_list
+  vertices = ChessBoard.squares
   adjacency_list = {}
   vertices.map { |k, v| adjacency_list[k] = adjacent_vertices(v) }
   adjacency_list
