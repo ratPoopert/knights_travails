@@ -42,22 +42,6 @@ class Knight
   end
 end
 
-def edges(vertex)
-  column = vertex[0]
-  row = vertex[1]
-
-  [
-    [column - 2, row + 1,],
-    [column - 2, row - 1,],
-    [column - 1, row + 2,],
-    [column - 1, row - 2,],
-    [column + 1, row + 2,],
-    [column + 1, row - 2,],
-    [column + 2, row + 1,],
-    [column + 2, row - 1,],
-  ]
-end
-
 def adjacent_vertices(vertex)
   vertices = ChessBoard.squares
   names_of_adjacent_vertices = vertices.select do |k, v|
