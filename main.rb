@@ -77,6 +77,20 @@ class PathFinder
       completed_path[:to] == destination
     end
   end
+
+  def self.paths_to(destination, source)
+    current_path = {from: nil, to: source}
+    queue = PathFinder.update_queue_with(current_path)
+    completed_paths = []
+     until PathFinder.finished?(destination, queue, completed_paths)
+      current_path = queue.shift
+      unless Path.completed?(current_path, completed_paths)
+        queue += PathFinder.update_queue_with(current_path)
+        completed_paths << current_path
+      end
+    end
+    completed_paths
+  end
 end
 
 class Path
@@ -102,7 +116,7 @@ def paths_to(destination, source)
 end
 
 def shortest_path(destination, source)
-  paths = paths_to(destination, source)
+  paths = PathFinder.paths_to(destination, source)
   shortest_path = []
   current_edge = paths.pop
   
