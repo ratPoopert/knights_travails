@@ -1,8 +1,11 @@
 # frozen_string_literal: true
-def graph
-  (1..8).to_a.repeated_permutation(2).to_a
-end
 
+class ChessBoard
+  def self.coordinates_list
+    (1..8).to_a.repeated_permutation(2).to_a
+  end
+end
+  
 def vertex_name(coordinates)
   column_name_index = coordinates[0] - 1
   row = coordinates[1]
@@ -11,9 +14,9 @@ def vertex_name(coordinates)
   "#{column_name}#{row_name}".to_sym
 end
 
-def vertices(graph = graph())
+def vertices
   vertices = {}
-  graph.map do |coordinates|
+  ChessBoard.coordinates_list.map do |coordinates|
     vertices[vertex_name(coordinates)] = coordinates
   end
   vertices
