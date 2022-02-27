@@ -27,17 +27,20 @@ class Knight
   def self.valid_moves_from(square)
     file = square[0]
     rank = square[1]
-  
-    [
-      [file - 2, rank + 1,],
+    ChessBoard.squares.select do |square, coords|
+      move_list(file, rank).include?(coords)
+    end.keys
+  end
+
+  def self.move_list(file, rank)
+     [[file - 2, rank + 1,],
       [file - 2, rank - 1,],
       [file - 1, rank + 2,],
       [file - 1, rank - 2,],
       [file + 1, rank + 2,],
       [file + 1, rank - 2,],
       [file + 2, rank + 1,],
-      [file + 2, rank - 1,],
-    ]
+      [file + 2, rank - 1,]]
   end
 end
 
@@ -51,7 +54,7 @@ end
 def adjacency_list
   vertices = ChessBoard.squares
   adjacency_list = {}
-  vertices.map { |k, v| adjacency_list[k] = adjacent_vertices(v) }
+  vertices.map { |k, v| adjacency_list[k] = Knight.valid_moves_from(v) }
   adjacency_list
 end
 
@@ -137,4 +140,4 @@ def display_result(destination, source)
   puts path
 end
 
-display_result(:a1, :h8)
+display_result(:a1, :c5)
