@@ -59,4 +59,8 @@ class PathFinder
     shortest_path << current_edge
     shortest_path.reverse
   end
+
+  def self.path_cost(destination, source)
+    PathFinder.shortest_path(destination, source).length.to_s
+  end
 end
