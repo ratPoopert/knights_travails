@@ -52,13 +52,6 @@ class Knight
   end
 end
 
-def adjacency_list
-  vertices = ChessBoard.squares
-  adjacency_list = {}
-  vertices.map { |k, v| adjacency_list[k] = Knight.valid_moves_from(v) }
-  adjacency_list
-end
-
 def update_queue_with(current_path)
   queue = []
   adjacent_vertices = Knight.all_valid_moves[(current_path[:to])]
