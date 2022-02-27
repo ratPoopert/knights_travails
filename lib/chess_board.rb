@@ -13,12 +13,9 @@ class ChessBoard
   end
 
   def self.squares
-    squares = {}
-    coordinates_list.map do |coordinates|
-      file = coordinates[:file]
-      rank = coordinates[:rank]
-      square_name = ChessBoardSquare.name(file, rank)
-      squares[square_name] = coordinates
+    squares = []
+    coordinates_list.map do |coords|
+      squares << ChessBoardSquare.new(coords[:file], coords[:rank])
     end
     squares
   end

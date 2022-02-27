@@ -5,8 +5,9 @@ require './lib/path.rb'
 
 class PathFinder
   def self.update_queue_with(current_path)
+    current_path
     queue = []
-    moves = Knight.all_valid_moves[(current_path[:to])]
+    p moves = Knight.all_valid_moves[(current_path[:to])]
     
     if current_path[:from]
       moves.delete_if do |move|
