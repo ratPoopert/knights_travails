@@ -52,6 +52,24 @@ class Knight
   end
 end
 
+class PathFinder
+  def self.update_queue_with(current_path)
+    queue = []
+    moves = Knight.all_valid_moves[(current_path[:to])]
+    
+    if current_path[:from]
+      moves.delete_if do |move|
+        move == current_path[:from]
+      end
+    end
+    moves.each do |move|
+      queue.push({from: current_path[:to],
+                  to: move})
+    end
+    queue
+  end
+end
+
 def update_queue_with(current_path)
   queue = []
   adjacent_vertices = Knight.all_valid_moves[(current_path[:to])]
@@ -83,12 +101,12 @@ end
 
 def paths_to(destination, source)
   current_path = {from: nil, to: source}
-  queue = update_queue_with(current_path)
+  queue = PathFinder.update_queue_with(current_path)
   completed_paths = []
    until finished?(destination, queue, completed_paths)
     current_path = queue.shift
     unless path_completed?(current_path, completed_paths)
-      queue += update_queue_with(current_path)
+      queue += PathFinder.update_queue_with(current_path)
       completed_paths << current_path
     end
   end
