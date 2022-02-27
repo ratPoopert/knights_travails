@@ -44,13 +44,6 @@ class Knight
   end
 end
 
-def adjacent_vertices(vertex)
-  vertices = ChessBoard.squares
-  names_of_adjacent_vertices = vertices.select do |k, v|
-    Knight.valid_moves_from(vertex).include?(v)
-  end.keys
-end
-
 def adjacency_list
   vertices = ChessBoard.squares
   adjacency_list = {}
