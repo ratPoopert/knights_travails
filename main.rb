@@ -4,20 +4,26 @@ class ChessBoard
   def self.coordinates_list
     (1..8).to_a.repeated_permutation(2).to_a
   end
+
+  def self.square_name(coordinates)
+    file_name_index = coordinates[0] - 1
+    rank = coordinates[1]
+    file_name = ("a".."h").to_a[file_name_index]
+    rank_name = rank.to_s
+    "#{file_name}#{rank_name}".to_sym
+  end
 end
   
 def vertex_name(coordinates)
-  column_name_index = coordinates[0] - 1
-  row = coordinates[1]
-  column_name = ("a".."h").to_a[column_name_index]
-  row_name = row.to_s
-  "#{column_name}#{row_name}".to_sym
+  ChessBoard.square_name(coordinates)
 end
 
 def vertices
   vertices = {}
-  ChessBoard.coordinates_list.map do |coordinates|
-    vertices[vertex_name(coordinates)] = coordinates
+  coordinates_list = ChessBoard.coordinates_list
+  coordinates_list.map do |coordinates|
+    vertex_name = ChessBoard.square_name(coordinates)
+    vertices[vertex_name] = coordinates
   end
   vertices
 end
