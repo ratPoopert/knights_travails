@@ -4,22 +4,22 @@ require './lib/chess_board.rb'
 
 class Knight
   def self.valid_moves_from(square)
-    file = square[0]
-    rank = square[1]
+    file = square[:file]
+    rank = square[:rank]
     ChessBoard.squares.select do |square, coords|
       move_list(file, rank).include?(coords)
     end.keys
   end
 
   def self.move_list(file, rank)
-     [[file - 2, rank + 1,],
-      [file - 2, rank - 1,],
-      [file - 1, rank + 2,],
-      [file - 1, rank - 2,],
-      [file + 1, rank + 2,],
-      [file + 1, rank - 2,],
-      [file + 2, rank + 1,],
-      [file + 2, rank - 1,]]
+     [{file: file - 2, rank: rank + 1,},
+      {file: file - 2, rank: rank - 1,},
+      {file: file - 1, rank: rank + 2,},
+      {file: file - 1, rank: rank - 2,},
+      {file: file + 1, rank: rank + 2,},
+      {file: file + 1, rank: rank - 2,},
+      {file: file + 2, rank: rank + 1,},
+      {file: file + 2, rank: rank - 1,}]
   end
 
   def self.all_valid_moves
