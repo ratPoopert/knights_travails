@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './lib/path_finder.rb'
+require './lib/bfs.rb'
 
 class Display
   def self.path(source, destination)

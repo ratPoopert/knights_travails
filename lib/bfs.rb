@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-require './lib/knight.rb'
 require './lib/path.rb'
 
-class PathFinder
-  def initialize(source, destination, adjacency_list)
+class BreadthFirstSearch
+  def initialize(graph, source, destination = nil)
+    @graph = graph.freeze
     @source = source.freeze
     @destination = destination.freeze
-    @adjacency_list = adjacency_list.freeze
     @pending = Queue.new
     @shortest_path = shortest_path
     @cost = cost
@@ -20,7 +19,7 @@ class PathFinder
   end
 
   def next_nodes
-    @adjacency_list[@current_path.destination].reject do |node|
+    @graph[@current_path.destination].reject do |node|
       node == @current_path.source
     end
   end
@@ -28,9 +27,15 @@ class PathFinder
   def finished?
     return false if @completed.empty?
     return true if @pending.empty?
-    
-    @completed.any? do |completed_path|
-      completed_path.destination == @destination
+
+    if @destination
+      @completed.any? do |completed_path|
+        completed_path.destination == @destination
+      end
+    else
+      @graph.keys.all? do |node|
+        @completed.any? { |path| path.source == node }
+      end
     end
   end
 

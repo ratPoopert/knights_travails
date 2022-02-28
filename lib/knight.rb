@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require './lib/chess_board.rb'
-require './lib/path_finder.rb'
+require './lib/bfs.rb'
 
 # Represents a knight chess piece.
 class Knight
@@ -32,6 +32,6 @@ class Knight
   end
 
   def self.path(starting_square, ending_square)
-    PathFinder.new(starting_square, ending_square, all_valid_moves)
+    BreadthFirstSearch.new(all_valid_moves, starting_square, ending_square)
   end
 end
