@@ -13,4 +13,8 @@ class Path
       completed_path.destination == @destination
     end
   end
+
+  def to_s
+    "#{@source} -> #{@destination}"
+  end
 end
