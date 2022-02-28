@@ -4,4 +4,4 @@ require './lib/display.rb'
 require './lib/knight.rb'
 
 
-p Knight.path(:a1, :c5)
+puts Knight.path(:a1, :c5)

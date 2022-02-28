@@ -72,4 +72,16 @@ class BreadthFirstSearch
   def cost
     @shortest_path.length
   end
+
+  def to_s
+    shortest_path = @shortest_path
+    first_path = shortest_path.shift
+    nodes = [first_path.source, first_path.destination]
+  
+    until shortest_path.empty?
+      nodes << shortest_path.shift.destination
+    end
+  
+    nodes.each(&:to_s).join(' -> ')
+  end
 end
