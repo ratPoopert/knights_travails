@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require './lib/display.rb'
 require './lib/knight.rb'
 
 
-puts Knight.path(:a1, :c5)
+puts Knight.best_path(:a1, :h8)

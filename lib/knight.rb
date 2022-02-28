@@ -31,7 +31,9 @@ class Knight
     adjacency_list
   end
 
-  def self.path(starting_square, ending_square)
-    BreadthFirstSearch.new(all_valid_moves, starting_square, ending_square)
+  def self.best_path(starting_square, ending_square)
+    best_path = BFS.new(all_valid_moves, starting_square, ending_square)
+    puts "You can move from #{starting_square} to #{ending_square} in #{best_path.cost} moves!"
+    puts best_path.to_s
   end
 end
