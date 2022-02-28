@@ -2,7 +2,7 @@
 
 require './lib/path.rb'
 
-class BreadthFirstSearch
+class BFS
   def initialize(graph, source, destination = nil)
     @graph = graph.freeze
     @source = source.freeze
