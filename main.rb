@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
 require './lib/display.rb'
+require './lib/knight.rb'
 
-Display.result(:a1, :c5)
+
+p Knight.path(:a1, :c5)

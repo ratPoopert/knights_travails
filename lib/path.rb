@@ -8,9 +8,9 @@ class Path
     @destination = destination
   end
 
-  def self.completed?(current_path, completed_paths)
+  def completed?(completed_paths)
     completed_paths.any? do |completed_path|
-      completed_path.destination == current_path.destination
+      completed_path.destination == @destination
     end
   end
 end

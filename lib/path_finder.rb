@@ -4,59 +4,67 @@ require './lib/knight.rb'
 require './lib/path.rb'
 
 class PathFinder
-  def self.update_queue_with(current_path)
-    queue = []
-    moves = Knight.all_valid_moves[(current_path.destination)]
-    
-    moves.delete_if { |move| move == current_path.source }
-
-    moves.each do |move|
-      queue << Path.new(current_path.destination, move)
-    end
-    queue
+  def initialize(source, destination, adjacency_list)
+    @source = source.freeze
+    @destination = destination.freeze
+    @adjacency_list = adjacency_list.freeze
+    @pending = Queue.new
+    @shortest_path = shortest_path
+    @cost = cost
   end
 
-  def self.finished?(destination, queue, completed_paths)
-    return false if completed_paths.empty?
-    return true if queue.empty?
-    
-    completed_paths.any? do |completed_path|
-      completed_path.destination == destination
+  def update_pending
+    next_nodes.each do |node|
+      @pending << Path.new(@current_path.destination, node)
     end
   end
 
-  def self.paths_to(destination, source)
-    current_path = Path.new(nil, source)
-    queue = PathFinder.update_queue_with(current_path)
-    completed_paths = []
-     until PathFinder.finished?(destination, queue, completed_paths)
-      current_path = queue.shift
-      unless Path.completed?(current_path, completed_paths)
-        queue += PathFinder.update_queue_with(current_path)
-        completed_paths << current_path
+  def next_nodes
+    @adjacency_list[@current_path.destination].reject do |node|
+      node == @current_path.source
+    end
+  end
+
+  def finished?
+    return false if @completed.empty?
+    return true if @pending.empty?
+    
+    @completed.any? do |completed_path|
+      completed_path.destination == @destination
+    end
+  end
+
+  def find_paths
+    @completed = []
+    @current_path = Path.new(nil, @source)
+    update_pending
+     until finished?
+      @current_path = @pending.shift
+      unless @current_path.completed?(@completed)
+        update_pending
+        @completed << @current_path
       end
     end
-    completed_paths
   end
 
-  def self.shortest_path(destination, source)
-    paths = PathFinder.paths_to(destination, source)
-    shortest_path = []
-    current_edge = paths.pop
+  def shortest_path
+    find_paths
+    paths = @completed
+    @current_path = paths.pop
     
     until paths.empty?
-      target = current_edge.source
-      next_edge = paths.pop
-      next unless next_edge.destination == target
+      shortest_path = [] unless shortest_path
+      next_path = paths.pop
+      next unless next_path.destination == @current_path.source
   
-      shortest_path << current_edge
-      current_edge = next_edge
+      shortest_path << @current_path
+      @current_path = next_path
     end
-    shortest_path << current_edge
+    shortest_path << @current_path
     shortest_path.reverse
   end
 
-  def self.path_cost(destination, source)
-    PathFinder.shortest_path(destination, source).length.to_s
+  def cost
+    @shortest_path.length
   end
 end

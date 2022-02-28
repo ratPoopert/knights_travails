@@ -3,7 +3,7 @@
 require './lib/path_finder.rb'
 
 class Display
-  def self.path(destination, source)
+  def self.path(source, destination)
     shortest_path = PathFinder.shortest_path(destination, source)
     first_path = shortest_path.shift
     vertices = [first_path.source, first_path.destination]
@@ -15,9 +15,9 @@ class Display
     vertices.each(&:to_s).join(' -> ')
   end
 
-  def self.result(destination, source)
-    cost = PathFinder.path_cost(destination, source)
+  def self.result(source, destination)
+    cost = PathFinder.path_cost(source, destination)
     puts "You can get from #{source} to #{destination} in #{cost} moves!"
-    puts Display.path(destination, source)
+    puts Display.path(source, destination)
   end
 end

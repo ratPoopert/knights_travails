@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require './lib/chess_board.rb'
+require './lib/path_finder.rb'
 
 # Represents a knight chess piece.
 class Knight
@@ -28,5 +29,9 @@ class Knight
       adjacency_list[square.name] = Knight.valid_moves_from(square)
     end
     adjacency_list
+  end
+
+  def self.path(starting_square, ending_square)
+    PathFinder.new(starting_square, ending_square, all_valid_moves)
   end
 end
